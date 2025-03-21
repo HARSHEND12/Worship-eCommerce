@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products & Cart</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <ul>
+            <li><a href="worship.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><button onclick="logout()">Logout</button></li>
+        </ul>
+    </nav>
+    <h2 style="    text-align: -webkit-center;
+     text-decoration: underline; font-family: Arial, Helvetica, sans-serif;">Your Cart</h2>
+    <div id="cart-items" style="
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    box-shadow: 20px 0px 16px 9px rgb(127, 214, 240);
+    gap: 15px;
+"></div> <!-- ✅ Cart items will be displayed here -->
+    <p>Total: ₹<span id="totalAmount">0.00</span></p>
+    <button id="buyNowBtn">Buy Now</button>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

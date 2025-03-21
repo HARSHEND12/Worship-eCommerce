@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .payment-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        .amount-box {
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            background: #28a745;
+            color: white;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        .back-btn {
+            background: #dc3545;
+            margin-top: 10px;
+        }
+
+        .back-btn:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="payment-container">
+        <h2>Complete Payment</h2>
+        <div class="amount-box">
+            Total Amount: ₹<span id="totalAmount">0</span>
+        </div>
+
+        <label for="paymentMethod">Select Payment Method:</label>
+        <select id="paymentMethod">
+            <option value="card">Credit/Debit Card</option>
+            <option value="upi">UPI</option>
+            <option value="cod">Cash on Delivery (Unavailable)</option>
+        </select>
+
+        <div id="cardDetails">
+            <label for="cardNumber">Card Number:</label>
+            <input type="text" id="cardNumber" placeholder="Enter Card Number" maxlength="16">
+
+            <label for="expiry">Expiry Date:</label>
+            <input type="month" id="expiry">
+
+            <label for="cvv">CVV:</label>
+            <input type="password" id="cvv" placeholder="***" maxlength="3">
+        </div>
+
+        <div id="upiDetails" style="display: none;">
+            <label for="upiId">UPI ID:</label>
+            <input type="text" id="upiId" placeholder="example@upi">
+        </div>
+
+        <button onclick="processPayment()">Pay Now</button>
+        <button class="back-btn" onclick="window.location.href='products.html'">Back to Cart</button>
+    </div>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            let totalAmount = localStorage.getItem("orderTotal");
+            if (totalAmount) {
+                document.getElementById("paymentAmount").textContent = `₹${totalAmount}`;
+            } else {
+                document.getElementById("paymentAmount").textContent = "₹0"; // Default if nothing is stored
+            }
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get total amount from cart
+            let total = localStorage.getItem("totalAmount") || "0";
+            document.getElementById("totalAmount").textContent = total;
+
+            // Payment method change event
+            document.getElementById("paymentMethod").addEventListener("change", function () {
+                let method = this.value;
+                document.getElementById("cardDetails").style.display = method === "card" ? "block" : "none";
+                document.getElementById("upiDetails").style.display = method === "upi" ? "block" : "none";
+            });
+        });
+
+        function processPayment() {
+            let method = document.getElementById("paymentMethod").value;
+            let totalAmount = document.getElementById("totalAmount").textContent;
+            
+            if (method === "card") {
+                let cardNumber = document.getElementById("cardNumber").value.trim();
+                let expiry = document.getElementById("expiry").value.trim();
+                let cvv = document.getElementById("cvv").value.trim();
+
+                if (cardNumber.length !== 16 || cvv.length !== 3 || expiry === "") {
+                    alert("Please enter valid card details.");
+                    return;
+                }
+            } else if (method === "upi") {
+                let upiId = document.getElementById("upiId").value.trim();
+                if (!upiId.includes("@")) {
+                    alert("Please enter a valid UPI ID.");
+                    return;
+                }
+            } else {
+                alert("Cash on Delivery is not available.");
+                return;
+            }
+
+            // Simulate payment success
+            alert("Payment of ₹" + totalAmount + " successful!");
+            localStorage.removeItem("cart"); // Clear cart after payment
+            window.location.href = "success.html"; // Redirect to success page
+        }
+    </script>
+
+</body>
+</html>

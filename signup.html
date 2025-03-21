@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <style>
+        /* Signup Page Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .signup-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            background: #f0f0f0;
+            box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.1), inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            background: #ffffff;
+            box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1), inset -2px -2px 4px rgba(255, 255, 255, 0.9);
+        }
+
+        .input-group img {
+            position: sticky;
+            left: 0px;
+            top: 63%;
+            transform: translateY(-50%);
+            width: 25px;
+            height: 28px;
+            opacity: 0.8;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1), -3px -3px 6px rgba(255, 255, 255, 0.7);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #5d0eaf, #1e5dd3);
+        }
+
+        .terms {
+            font-size: 12px;
+            margin-top: 10px;
+            color: #666;
+        }
+
+        #span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spant {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="signup-container">
+        <h2>Sign Up</h2>
+        <form id="signupForm">
+            <div class="input-group">
+                <span class="spant"> <img src="user-icon.png" alt="User Icon">
+                    <input type="text" id="name" placeholder="Full Name" required></span>
+
+            </div>
+            <div class="input-group">
+                <span class="spant"> <img src="email-icon.png" alt="Email Icon">
+                    <input type="email" id="email" placeholder="Email" required></span>
+
+            </div>
+            <div class="input-group">
+                <span class="spant"><img src="lock.jpg" alt="Lock Icon">
+                    <input type="password" id="password" placeholder="Password" required></span>
+
+            </div>
+            <button type="submit">Create Account</button>
+        </form>
+        <span id="span"><input type="checkbox" name="check" id="">
+            <p class="terms">I read and agree to <a href="#">Terms & Conditions</a></p>
+        </span>
+    </div>
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            // Simulate signup success (Replace with actual backend call)
+            setTimeout(function() {
+                alert("You have successfully signed up! Redirecting to login page...");
+                window.location.href = "login.html"; // Redirect to login page
+            }, 1000);
+        });
+      </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

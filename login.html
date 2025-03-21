@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+        }
+        .login-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #ff7e5f;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .social-login {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+        .social-login button {
+            display: flex;
+            width: 48%;
+            background: white;
+            color: black;
+            border: 1px solid #ccc;
+        }
+        .social-login button:hover{
+            transform: translate(2px);
+            background-color: burlywood;
+            transition: background-color 0.2s ease-in-out;
+        }
+        button:hover{
+            transform: scale(1.1);
+            background-color: rgb(152, 118, 72);
+            transition: background-color 0.2s ease-in-out;
+        }
+        p {
+            margin-top: 10px;
+        }
+        a {
+            color: #ff7e5f;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2 style="text-align: center;color: #ff7e5f;">Welcome User</h2>
+        <p>Please login to your account</p>
+        <form id="loginForm">
+            <input type="email" id="loginEmail" placeholder="Email" required>
+            <input type="password" id="loginPassword" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p id="loginMessage"></p>
+        <div class="social-login">
+            <button><img src="google.png" alt="" style="width: 25px;height: 25px;filter: drop-shadow(2px 3px 0px 0px);">Google</button>
+            <button><img src="facebook.png" alt="" style="width: 25px;height: 25px;filter: drop-shadow(2px 3px 0px 0px);">Facebook</button>
+        </div>
+        <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+            try {
+                const response = await fetch("http://localhost:5000/api/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await response.json();
+                if (data.token) {
+                    localStorage.setItem("authToken", data.token);
+                    localStorage.setItem("userId", data.userId);
+                    document.getElementById("loginMessage").innerText = "Login successful!";
+                    window.location.href = "worship.html";
+                } else {
+                    document.getElementById("loginMessage").innerText = "Invalid email or password!";
+                }
+            } catch (error) {
+                document.getElementById("loginMessage").innerText = "Server error!";
+            }
+        });
+    </script>
+</body>
+</html>

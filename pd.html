@@ -1,0 +1,45 @@
+<h2>Product List</h2>
+<input type="text" id="search" placeholder="Search Products">
+<button onclick="fetchProducts()">Search</button>
+<div id="productList"></div>
+
+<script>
+async function fetchProducts() {
+    const searchQuery = document.getElementById("search").value;
+    const response = await fetch(`http://localhost:5000/api/products?search=${searchQuery}`);
+    const products = await response.json();
+
+    let html = "";
+    products.forEach(product => {
+        html += `
+            <div>
+                <h3>${product.name}</h3>
+                <p>Price: ₹${product.price}</p>
+                <p>Category: ${product.category}</p>
+                <p>Material: ${product.material}</p>
+                <img src="${product.image}" alt="${product.name}" width="150">
+            </div>
+        `;
+    });
+    document.getElementById("productList").innerHTML = html;
+}
+
+// Load products on page load
+fetchProducts();
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            window.location.href = "login.html";
+        }
+    });
+    
+    function logout() {
+        localStorage.removeItem("authToken");
+        window.location.href = "login.html";
+    }
+    </script>
+    
+    <button onclick="logout()">Logout</button>
+    
