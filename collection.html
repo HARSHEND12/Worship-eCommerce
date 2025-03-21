@@ -2,10 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="Collection" content="width=device-width, initial-scale=1.0">
-    <title>My Items</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Worship Goods</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <header>
+        <h1>All Worship Goods</h1>
+        <a href="worship.html">Back to Home</a>
+    </header>
     
+    <section class="products" id="productList">
+        <!-- Products will be loaded dynamically -->
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            const response = await fetch("http://localhost:5000/api/products");
+            const products = await response.json();
+
+            const productsContainer = document.getElementById("productList");
+            productsContainer.innerHTML = "";
+
+            products.forEach(product => {
+                const productCard = document.createElement("div");
+                productCard.classList.add("product-card");
+
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h2>${product.name}</h2>
+                    <p>${product.description}</p>
+                    <p><strong>Price:</strong> ₹${product.price}</p>
+                    <button onclick="addToCart(${product.id}, '${product.name}', ${product.price}, '${product.image}')">Add to Cart</button>
+                `;
+
+                productsContainer.appendChild(productCard);
+            });
+        });
+
+        function addToCart(id, name, price, image) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ id, name, price, image, quantity: 1 });
+            }
+            localStorage.setItem("cart", JSON.stringify(cart));
+            alert(`${name} added to cart!`);
+        }
+    </script>
 </body>
 </html>
